@@ -39,6 +39,7 @@ function Product(){
     const [isShown2, setIsShown2] = React.useState(false);
     const [isShown3, setIsShown3] = React.useState(false);
     const [customerId, setCustomerId] = React.useState('');
+    const [deliveryAddress, setDeliveryAddress] = React.useState('');
     const [customerOrderList, setCustomerOrderList] = React.useState([]);
     const checkCustomer = async () => {
         const cusRef = collection(db, "customer");
@@ -78,12 +79,18 @@ function Product(){
         }
         else{
             if (checkValue === true) {
-                const docId = Date.now().toString();
+                if(deliveryAddress === ''){
+                    toaster.danger('enter delivery address');
+                    document.getElementById('deliveryAddress').focus();
+                    document.getElementById('deliveryAddress').style.border = '1px solid red';
+                }else{
+                    const docId = Date.now().toString();
                 const orderRef = doc(db, "order", docId);
                 await setDoc(orderRef, {
                     id: docId,
                     cusID: customerId,
                     createdAt: new Date().toLocaleDateString(),
+                    deliveryAddress: deliveryAddress,
                     state: false,
                     items: showCart().map((item) => {
                         return {
@@ -106,9 +113,12 @@ function Product(){
                 setIsShown3(false);
                 setIsShown2(false);
                 toaster.success('order success');
+            }
 
 
 
+            }else{
+                toaster.danger('phone number is not exist');
             }
         }
     }
@@ -209,9 +219,6 @@ function Product(){
         setProduct(result);
     }  
     }
-
-    const [categoryClicked, setCategoryClicked] = React.useState(false);
-    const [priceClicked, setPriceClicked] = React.useState(false);
 
     const getProductWithPrice = async (price) => {
         if(price === 'all'){
@@ -428,12 +435,14 @@ function Product(){
                 <div className="product-order">
                     <div className="product-order-customer">
                         <div className="product-order-customer-info">
-                            <input type="text" placeholder="phone" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} className="input" />
-                            <Button appearance="primary" intent="success" onClick={() => checkCustomer()}>Confirm phone</Button>
+                            <input type="text" placeholder="phone" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} className="input"  style={{ width: '60%', height: '30px' }} />
+                            <Button appearance="primary" intent="success" onClick={() => checkCustomer()} height={35}>Confirm phone</Button>
                             <p style={{ color: 'green' }}>{customerName}</p>
                             {
                                 customerName.length === 0 ? <button onClick={() => setIsShown3(true)} style={{ border: 'none', cursor: 'pointer' }}>Sign in a member?</button> : null
                             }
+                            {/* input delivery address */}
+                            <input type="text" placeholder="delivery address" value={deliveryAddress} onChange={(e) => setDeliveryAddress(e.target.value)} className="input" style={{ marginTop: '10px', width: '100%', height: '30px' }} id="deliveryAddress" />
                         </div>
                         <table width={800}>
                             {
