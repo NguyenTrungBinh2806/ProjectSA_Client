@@ -301,18 +301,18 @@ function Product(){
                         if (item.state === true) {
                             return (
                                 <div className="product-list-item" key={index}>
-                                    <div className="product-list-item-image">
+                                    <div className="product-list-item-image" onClick={() => { setView(item); setIsShown(true) }} style={{ cursor: 'pointer' }}>
                                         <img src={item.imageUrl} alt="product" className='product-image' />
                                     </div>
                                     <div className="product-list-item-info">
-                                        <div className="product-list-item-info-name">
+                                        <div className="product-list-item-info-name" onClick={() => { setView(item); setIsShown(true) }} style={{ cursor: 'pointer' }}>
                                             <h4>
                                                 {/* if name is too long, then show only 20 characters */}
                                                 {item.name.length > 15 ? item.name.substring(0, 15) + '...' : item.name}
                                             </h4>
                                         </div>
                                         <div className="product-list-item-info-price">
-                                            <h4>
+                                            <h4 style={{ color: 'red', cursor: 'pointer' }}>
                                                 {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.price)}
                                             </h4>
                                         </div>
@@ -358,7 +358,7 @@ function Product(){
                             <h3>{view.name}</h3>
                         </div>
                         <div className="product-view-info-price">
-                            <h3>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(view.price)}</h3>
+                            <h3 style={{color: 'red'}}>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(view.price)}</h3>
                             <Button onClick={() => addToCart({ item: view, amount: 1, id: view.id })} appearance="primary" intent="success" iconAfter={ShoppingCartIcon}>Add to Cart</Button>
                         </div>
                         <div className="product-view-info-description">
