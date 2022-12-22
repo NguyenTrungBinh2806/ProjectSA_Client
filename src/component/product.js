@@ -236,11 +236,10 @@ function Product(){
             setProduct(result);
         }
     }
-
-
        
     return (
         <div className="product">
+
             <div className='product-header'>
                 <div className='Select-category' style={{ marginLeft: '50px', display: 'flex', alignItems: 'center' }}>
                     <label style={{ marginRight: '10px' }}>
@@ -274,7 +273,9 @@ function Product(){
             <button className="product-shopping-cart" style={{ border: 'none', backgroundColor: 'white' }} onClick={() => setIsShown1(true)}>
                 <ShoppingCartIcon size={30} color="info" />
                  <span style={{color: 'white', backgroundColor: 'red'}}>
+                    {/* {getCartLength()} */}
                     {showCart().reduce((total, item) => total + item.amount, 0)}
+                    {/* {showCart1} */}
                 </span>
                 
             </button>
@@ -308,7 +309,7 @@ function Product(){
                                         <div className="product-list-item-info-name" onClick={() => { setView(item); setIsShown(true) }} style={{ cursor: 'pointer' }}>
                                             <h4>
                                                 {/* if name is too long, then show only 20 characters */}
-                                                {item.name.length > 15 ? item.name.substring(0, 15) + '...' : item.name}
+                                                {item.name.length > 20 ? item.name.substring(0, 20) + '...' : item.name}
                                             </h4>
                                         </div>
                                         <div className="product-list-item-info-price">
